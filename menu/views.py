@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.datetime_safe import datetime
+
 from .models import *
 # from django.db.models import Sum
 from .forms import DishForm, DishProductFormSet, DeleteDishForm, DeleteProductForm, Product, AddProductForm, \
-    BreakfastForm
+    BreakfastForm, DishProduct, SaveMenuDishAndProducts
 
 
 # Представление
@@ -19,17 +21,63 @@ def create_breakfast(request):
                 products = DishProduct.objects.filter(dish=dish)
                 dishes_with_products.append({'dish': dish, 'products': products})
                 for product in products:
-                    if product.product.name in total_products:
-                        total_products[product.product.name] += product.grams
-                    else:
-                        total_products[product.product.name] = product.grams
+                    SaveMenuDishAndProducts.objects.create(
+                        dish=dish,
+                        product=product.product,
+                        grams=product.grams
+                    )
+                return redirect('create_menu')
+
     else:
         form = BreakfastForm()
         dishes_with_products = []
         total_products = {}
 
     return render(request, 'main.html',
-                  {'form': form, 'dishes_with_products': dishes_with_products, 'total_products': total_products})
+                  {'form': form, 'dishes_with_products': dishes_with_products,
+                   'total_products': total_products})
+
+
+# def create_menu(request):
+#     dishes = SaveMenuDishAndProducts.dish.all()
+#     products = SaveMenuDishAndProducts.product.all()
+#     grams = SaveMenuDishAndProducts.grams.all()
+#
+#     extension = {
+#         'dishes': dishes,
+#         'products': products,
+#         'grams': grams,
+#     }
+#
+#     return render(request, 'create_menu.html', extension)
+
+
+def create_menu(request):
+    products_menu = []
+    dishes_menu = []
+    products_list = Product.objects.all()
+
+    # Получение блюд и продуктов, созданных в последнюю минуту
+    recently_created_items = SaveMenuDishAndProducts.objects.get_recently_created_items()
+
+    for item in recently_created_items:
+        if item.dish not in dishes_menu:
+            dishes_menu.append(item.dish)
+
+        if item.product not in products_menu:
+            products_menu.append(item.product)
+
+    extension = {
+        'products_menu': products_menu,
+        'products_list': products_list,
+        'recently_created_items': recently_created_items,
+        'dishes_menu': dishes_menu,
+    }
+
+    return render(request, 'create_menu.html', extension)
+
+
+
 
 
 def dish_info(request, dish_id):
@@ -40,8 +88,6 @@ def dish_info(request, dish_id):
     prod_length_plus_one = len(products) + 1
     dish_p = get_object_or_404(Dish, pk=dish_id)
     products_all = dish.dishproduct_set.all()
-    next_dish_id = dish_id + 1
-    previos_dish_id = dish_id - 1
 
     extension = {
 

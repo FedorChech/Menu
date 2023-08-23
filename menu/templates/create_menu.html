@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block main_menu %}
+
+{% for prod in products_menu %}
+    <li>{{ prod.name }}</li>
+{% endfor %}
+
+{% endblock %}
+
