@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Длбавление продукта{% endblock %}
+
+{% block add_dish %}
+{% load static %}
+
+
+<div style="display: grid; place-items: center; min-height: 10vh;">
+    <h3 class="display-6">Создание блюда</h3>
+    <div>
+        <form method="post" class="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <div style="display: grid; place-items: center; min-height: 10vh;">
+                    {{ dish_form.name.label_tag }}
+                    {{ dish_form.name }}
+                    <div>
+                    </div>
+                    {{ dish_product_formset.management_form }}
+                    {% for form in dish_product_formset %}
+                    <div class="form-group">
+                        {{ form.product.label_tag }}
+
+                        {{ form.product }}
+                        {{ form.grams.label_tag }}
+                        {{ form.grams }}
+                    </div>
+                    {% endfor %}
+                    <p></p>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

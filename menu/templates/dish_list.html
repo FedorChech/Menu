@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Список блюд{% endblock %}
+
+{% block dish_list %}
+<p></p>
+
+<div style="display: grid; place-items: center; min-height: 10vh;">
+    <h3 class="display-6">Список блюд</h3>
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th>№</th>
+                <th>Наименование</th>
+            </tr>
+            {% for dish in dishes %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'dish_info' dish_id=dish.id %}" class="text-success">{{ dish }}</a></td>
+
+            </tr>
+            {% endfor %}
+        </table>
+         <a href="{% url 'add_dish' %}" class="btn btn-primary mt-3">Добавить блюдо</a>
+         <a href="{% url 'delete_dish' %}" class="btn btn-primary mt-3">Удалить блюдо</a>
+        {% endblock %}
+    </div>
+</div>

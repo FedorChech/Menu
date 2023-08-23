@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Инфо о блюде{% endblock %}
+
+{% block dish_info %}
+
+<p></p>
+<div>
+    <h3>Информация о блюде</h3>
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th>Наименование</th>
+                <th>Состав</th>
+                <th>Вес</th>
+                <th>Калорийность</th>
+            </tr>
+
+            <tr>
+                <td rowspan="{{ prod_length_plus_one }}">{{ dish }}</td>
+                <td>
+                    {% for dish_product in products_all %}
+                    {{ dish_product.product.name }} - {{ dish_product.grams }} г<br>
+                    {% endfor %}
+                </td>
+                <td>{{ total_weight }} грамм</td>
+                <td>{{ total_calories }} ккал</td>
+            </tr>
+        </table>
+        <a href="{% url 'dish_list' %}" class="btn btn-primary mt-3">Вернуться к списку продуктов</a>
+        {% endblock %}
+
+
+
+

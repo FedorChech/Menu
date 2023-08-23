@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Удалить продукт{% endblock %}
+
+{% block del_success_prod %}
+<p></p>
+
+
+    <div style="display: grid; place-items: center; min-height: 10vh;">
+        <h3 class="display-6">Удаление продукта</h3>
+        <div>
+            <div style="display: grid; place-items: center; min-height: 10vh;">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+            </div>
+            <div style="display: grid; place-items: center; min-height: 5vh;">
+                <button type="submit" class="btn btn-danger btn-block ">Удалить продукт</button>
+            </div>
+            </form>
+        </div>
+
+
+
+    {% endblock %}

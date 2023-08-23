@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Добавить продукт{% endblock %}
+
+{% block add_product %}
+
+<head>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+
+<p></p>
+<div style="display: grid; place-items: center; min-height: 10vh;">
+    <h2 class="display-6">Добавление продукта</h2>
+    <div>
+        <form method="post" class="container mt-5">
+            {% csrf_token %}
+            <div style="display: grid; place-items: center; min-height: 10vh;">
+                <div class="mb-3">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Название продукта</label>
+                    {{ form.name }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.calories.id_for_label }}" class="form-label">Калории------------</label>
+                    {{ form.calories }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.proteins.id_for_label }}" class="form-label">Белки---------------</label>
+                    {{ form.proteins }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.fats.id_for_label }}" class="form-label">Жиры---------------</label>
+                    {{ form.fats }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.carbohydrates.id_for_label }}" class="form-label">Углеводы-----------</label>
+                    {{ form.carbohydrates }}
+                </div>
+
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Добавить продукт</button>
+                </div>
+                <div>
+        </form>
+
+
+        {% endblock %}

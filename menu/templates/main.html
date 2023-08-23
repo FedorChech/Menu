@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block main_menu %}
+
+
+<h1>Создайте завтрак</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Создать</button>
+</form>
+<p></p>
+<p></p>
+{% if dishes_with_products %}
+<h1>Ваш завтрак</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Блюдо</th>
+        <th>Продукты</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for dish_data in dishes_with_products %}
+    <tr>
+        <td>{{ dish_data.dish.name }}</td>
+        <td>
+            <ul>
+                {% for product in dish_data.products %}
+                <li>{{ product.product.name }} - {{ product.grams }} g</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<td><strong>Всего продуктов:</strong></td>
+<td>
+    <ul>
+        {% for product_name, total_grams in total_products.items %}
+        <li>{{ product_name }} - {{ total_grams }} g</li>
+        {% endfor %}
+    </ul>
+</td>
+
+{% endif %}
+
+{% endblock %}

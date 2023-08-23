@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Список продуктов{% endblock %}
+
+{% block product_list %}
+<p></p>
+<style>
+
+        a {
+            text-decoration: none;
+        }
+
+
+</style>
+<div style="display: grid; place-items: center; min-height: 10vh;">
+    <h3 class="display-6">Список продуктов</h3>
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th>№</th>
+                <th>Наименование</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'product_info' product_id=product.id %}" class="text-success">{{ product }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+          <a href="{% url 'add_product' %}" class="btn btn-primary mt-3">Добавить продукт</a>
+          <a href="{% url 'delete_product' %}" class="btn btn-primary mt-3">Удалить продукт</a>
+
+
+        {% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block main_menu %}
+
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid black;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Наименование рационнов и блюд</th>
+                <th>Выход блюд</th>
+                <!-- ... Повторите этот шаблон для всех столбцов ... -->
+                <th>Заголовок 30</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dish in dishes %}
+            <tr>
+                <td>{{ dish.name }}</td>
+                {% for product in dish.dishproduct_set.all %}
+                <td>{{ product.product.name }} ({{ product.grams }} г)</td>
+                {% endfor %}
+                <!-- ... Повторите этот шаблон для остальных столбцов ... -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+{% endblock %}
